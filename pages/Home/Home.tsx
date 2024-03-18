@@ -9,6 +9,7 @@ import {
   Input,
   InputField,
   VStack,
+  Text,
 } from "@gluestack-ui/themed";
 import CircleLogo from "../../components/logo/CircleLogo";
 import { useState } from "react";
@@ -30,6 +31,7 @@ const HomePage = () => {
 
     try {
       // je fais l'appel avec fetch
+
       const response = await fetch(
         process.env.EXPO_PUBLIC_XANO_API_URL + "/auth/signup",
         {

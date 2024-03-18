@@ -8,3 +8,25 @@ On a un formulaire d'inscription qui "marchouille" mais il manque pas mal de cho
 - si erreur, il faudrait l'afficher
 - ce serait bien d'avoir un etat loading pour indiquer a l'utilisateur que la requete est en cours
 - idealement, masquer les champs (puisqu'on vient de s'inscrire) ou au moins les désactiver (on verra plus tard comment rediriger vers une autre page)
+
+Il va nous falloir des states :
+
+- un message pour l'erreur (error)
+- stocker le token si on l'obtient (reussite) (authToken)
+- un state isLoading pour savoir si on est en chargement ou pas (isLoading)
+
+Il va falloir des affichages conditionnels
+
+- pour l'erreur
+- pour l'etat de chargement
+
+Deux facons de faire un affichage conditionnel :
+
+- avec un ternaire `{error ? <Text>Ca marche pas</Text> : null}`
+- avec un operateur && `{error && <Text>Ca marche pas</Text>}`
+
+Quelques composants que l'on pourrait utiliser :
+
+- https://gluestack.io/ui/docs/components/feedback/spinner pour le chargement
+- https://gluestack.io/ui/docs/components/typography/text pour afficher l'erreur (en rouge avec la propriete color)
+- https://gluestack.io/ui/docs/components/forms/form-control si vous voulez le faire a la bien

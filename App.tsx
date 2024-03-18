@@ -16,15 +16,15 @@ const globalStyles = StyleSheet.create({
 });
 
 export default function App() {
-  if (Constants.expoConfig?.extra?.isStorybook) {
-    return <StorybookUIRoot />;
-  } else {
-    return (
-      <GluestackUIProvider config={config}>
-        <SafeAreaView style={globalStyles.AndroidSafeArea}>
-          <HomePage />
-        </SafeAreaView>
-      </GluestackUIProvider>
-    );
-  }
+  // if (Constants.expoConfig?.extra?.isStorybook) {
+  //   return <StorybookUIRoot />;
+  // } else {
+  return (
+    <GluestackUIProvider config={config}>
+      <SafeAreaView style={globalStyles.AndroidSafeArea}>
+        <HomePage />
+      </SafeAreaView>
+    </GluestackUIProvider>
+  );
+  // }
 }

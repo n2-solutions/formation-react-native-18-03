@@ -11,6 +11,7 @@ import HomePage from "./pages/Home/Home";
 import SignupPage from "./pages/Signup/Signup";
 import LoginPage from "./pages/Login/Login";
 import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
+import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/workouts" element={<WorkoutListPage />} />
+              <Route path="/workout/:id" element={<WorkoutDetailPage />} />
             </Routes>
           </NativeRouter>
         </SafeAreaView>

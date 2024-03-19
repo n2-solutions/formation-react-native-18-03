@@ -9,31 +9,35 @@ import {
   Text,
 } from "@gluestack-ui/themed";
 import CircleLogo from "../../components/logo/CircleLogo";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useApi from "../../hooks/useApi";
+import { AuthContext, useAuth } from "../../context/Auth";
 
-const HomePage = () => {
+const SignupPage = () => {
   const { request, isLoading, errorMessage } = useApi();
+  const { token, setToken } = useAuth();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [authToken, setAuthToken] = useState<string | null>(null);
-
   const handleClearFields = () => {
     setName("");
     setEmail("");
     setPassword("");
-    setAuthToken(null);
   };
 
   const handleSignup = async () => {
     const payload = { name, email, password };
 
-    const result = await request("/auth/signup", "POST", payload);
-
-    console.log("result", result);
+    // je fais ma requete avec mon hook custom
+    try {
+      const result = await request("/auth/signup", "POST", payload);
+      // si reussite, je stocke mon token dans mon contexte
+      setToken(result.authToken);
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
 
   return (
@@ -42,20 +46,10 @@ const HomePage = () => {
       <Button marginTop={15} onTouchEnd={handleClearFields}>
         <ButtonText>Vider les champs</ButtonText>
       </Button>
-      <Input
-        isDisabled={!!authToken}
-        marginTop={15}
-        variant="outline"
-        size="md"
-      >
+      <Input marginTop={15} variant="outline" size="md">
         <InputField placeholder="Name" value={name} onChangeText={setName} />
       </Input>
-      <Input
-        isDisabled={!!authToken}
-        marginTop={15}
-        variant="outline"
-        size="md"
-      >
+      <Input marginTop={15} variant="outline" size="md">
         <InputField
           keyboardType="email-address"
           placeholder="Email"
@@ -63,12 +57,7 @@ const HomePage = () => {
           onChangeText={setEmail}
         />
       </Input>
-      <Input
-        isDisabled={!!authToken}
-        marginTop={15}
-        variant="outline"
-        size="md"
-      >
+      <Input marginTop={15} variant="outline" size="md">
         <InputField
           placeholder="Password"
           secureTextEntry
@@ -78,7 +67,6 @@ const HomePage = () => {
       </Input>
       {isLoading && <Spinner size="small" />}
       {errorMessage !== "" && <Text>{errorMessage}</Text>}
-      {authToken && <Text>Ton token est : {authToken}</Text>}
       <Button marginTop={15} onTouchEnd={handleSignup}>
         <ButtonText>S'inscrire</ButtonText>
       </Button>
@@ -86,4 +74,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default SignupPage;

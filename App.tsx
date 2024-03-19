@@ -5,7 +5,8 @@ import StorybookUIRoot from "./.storybook";
 import { GluestackUIProvider, SafeAreaView } from "@gluestack-ui/themed";
 import Constants from "expo-constants";
 import { StyleSheet, Platform, StatusBar } from "react-native";
-import HomePage from "./pages/Home/Home";
+import SignupPage from "./pages/Signup/Signup";
+import { AuthProvider } from "./context/Auth";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -20,11 +21,13 @@ export default function App() {
   //   return <StorybookUIRoot />;
   // } else {
   return (
-    <GluestackUIProvider config={config}>
-      <SafeAreaView style={globalStyles.AndroidSafeArea}>
-        <HomePage />
-      </SafeAreaView>
-    </GluestackUIProvider>
+    <AuthProvider>
+      <GluestackUIProvider config={config}>
+        <SafeAreaView style={globalStyles.AndroidSafeArea}>
+          <SignupPage />
+        </SafeAreaView>
+      </GluestackUIProvider>
+    </AuthProvider>
   );
   // }
 }

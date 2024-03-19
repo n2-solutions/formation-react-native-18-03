@@ -1,28 +1,23 @@
-// qu'est ce quon essaye de faire ?
-// un hook generique, pour gerer tous nos calls API
-
 import { useState } from "react";
-
-// ce que jenvoie :
-//      je veux gerer differents verbes : GET, POST, PATCH, DELETE
-//      je veux pouvoir envoyer un body
-//      je veux pouvoir ajouter des headers HTTP, et de base avoir un header content type : json
-// je veux pouvoir gerer l'etat de chargement
-// je veux pouvoir gerer une erreur
-// je veux renvoyer de mon hook, pour usage dans le composant :
-// une fonction qui fait la requete
-// le loading
-// lerreur
+import { useAuth } from "../context/Auth";
 
 const useApi = () => {
+  // notre context useAuth
+  const { token, setToken } = useAuth();
   // nos states loading et erreur
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // TODO trouver le type
   const headers: any = { "Content-Type": "application/json" };
 
   // ma fonction pour faire la requete
   const request = async (url: string, method: string, body?: object) => {
+    // rajouter dans les headers le header Authorization, et y mettre le token, si existant
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     try {
       // je vais faire la requete, je me met en chargement
       setIsLoading(true);
@@ -41,6 +36,13 @@ const useApi = () => {
         setErrorMessage(result.message);
       } else {
         console.log("Reussite ", result);
+        // si la requete est sur login ou signup, et qu'elle a reussi, on va stocker le token dans le contexte
+        if (
+          (url === "/auth/login" || url === "/auth/signup") &&
+          result.authToken
+        ) {
+          setToken(result.authToken);
+        }
         setErrorMessage(null);
       }
       // si j'arrive ici, ma requete est terminée

@@ -16,24 +16,23 @@ import useApi from "../../hooks/useApi";
 import { useAuth } from "../../context/Auth";
 import { useNavigate } from "react-router-native";
 
-const SignupPage = () => {
+const LoginPage = () => {
   const { request, isLoading, errorMessage } = useApi();
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ronnie@n2.solutions");
+  const [password, setPassword] = useState("12345678A#");
 
   const handleSignup = async () => {
-    const payload = { name, email, password };
+    const payload = { email, password };
 
     // je fais ma requete avec mon hook custom
     try {
-      const result = await request("/auth/signup", "POST", payload);
+      const result = await request("/auth/login", "POST", payload);
 
       navigate("/workouts");
     } catch (error) {
-      console.error("Signup failed", error);
+      console.error("Login failed", error);
     }
   };
 
@@ -41,9 +40,6 @@ const SignupPage = () => {
     <VStack paddingLeft={15} paddingRight={15} alignItems="center">
       <CircleLogo marginTop={15} width={200} height={200} />
       <Input marginTop={35} variant="outline" size="md">
-        <InputField placeholder="Name" value={name} onChangeText={setName} />
-      </Input>
-      <Input marginTop={15} variant="outline" size="md">
         <InputField
           keyboardType="email-address"
           placeholder="Email"
@@ -62,13 +58,13 @@ const SignupPage = () => {
       {isLoading && <Spinner size="small" />}
       {errorMessage !== "" && <Text>{errorMessage}</Text>}
       <Button onTouchEnd={handleSignup}>
-        <ButtonText>Signup</ButtonText>
+        <ButtonText>Login</ButtonText>
       </Button>
-      <Link mt={36} onPress={() => navigate("/login")}>
-        <LinkText>I wish to login instead</LinkText>
+      <Link mt={36} onPress={() => navigate("/signup")}>
+        <LinkText>I wish to signup instead</LinkText>
       </Link>
     </VStack>
   );
 };
 
-export default SignupPage;
+export default LoginPage;

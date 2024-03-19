@@ -1,14 +1,16 @@
 import * as React from "react";
 import { NativeRouter, Route, Routes } from "react-router-native";
-
 import { config } from "@gluestack-ui/config";
 import StorybookUIRoot from "./.storybook";
 import { GluestackUIProvider, SafeAreaView } from "@gluestack-ui/themed";
 import Constants from "expo-constants";
 import { StyleSheet, Platform, StatusBar } from "react-native";
-import SignupPage from "./pages/Signup/Signup";
 import { AuthProvider } from "./context/Auth";
+
 import HomePage from "./pages/Home/Home";
+import SignupPage from "./pages/Signup/Signup";
+import LoginPage from "./pages/Login/Login";
+import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -30,6 +32,8 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/workouts" element={<WorkoutListPage />} />
             </Routes>
           </NativeRouter>
         </SafeAreaView>

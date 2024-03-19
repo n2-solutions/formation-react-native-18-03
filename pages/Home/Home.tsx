@@ -18,10 +18,9 @@ const HomePage = () => {
 
   // useEffect avec tableau
   useEffect(() => {
-    console.log("Cette fonction est appelée au premier rendu");
-
+    // si on a pas de token, on redirige
     if (!token) {
-      navigate("/signup");
+      navigate("/login");
     }
   }, []);
 

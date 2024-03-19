@@ -30,3 +30,16 @@ Quelques composants que l'on pourrait utiliser :
 - https://gluestack.io/ui/docs/components/feedback/spinner pour le chargement
 - https://gluestack.io/ui/docs/components/typography/text pour afficher l'erreur (en rouge avec la propriete color)
 - https://gluestack.io/ui/docs/components/forms/form-control si vous voulez le faire a la bien
+  ]
+
+## J2
+
+On aimerait faire une page pour voir le détail d'un workout.
+La route `/workout/${id}`, sur laquelle on navige lors d'un clic sur la carte (hors bouton).
+
+Avec ce que l'on a vu ajd et en s'inspirant du code existant :
+
+- creer la route et trouver comment avoir un parametre de route pour l'id (direction react-router-native doc)
+- créer la page
+- recuperer le detail d'UN workout (GET /workout/{workout_id}) avec useApi
+- faire un affichage avec la liste des exos

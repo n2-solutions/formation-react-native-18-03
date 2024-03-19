@@ -9,13 +9,15 @@ import {
   Text,
 } from "@gluestack-ui/themed";
 import CircleLogo from "../../components/logo/CircleLogo";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import useApi from "../../hooks/useApi";
 import { AuthContext, useAuth } from "../../context/Auth";
+import { useNavigate } from "react-router-native";
 
 const SignupPage = () => {
   const { request, isLoading, errorMessage } = useApi();
   const { token, setToken } = useAuth();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +37,8 @@ const SignupPage = () => {
       const result = await request("/auth/signup", "POST", payload);
       // si reussite, je stocke mon token dans mon contexte
       setToken(result.authToken);
+
+      navigate("/");
     } catch (error) {
       console.error("Login failed", error);
     }

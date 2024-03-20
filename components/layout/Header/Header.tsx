@@ -28,7 +28,7 @@ const Header = () => {
 
   const handleDisconnect = () => {
     setToken(null);
-    // TODO clear tout l'historique
+    navigate("/login", { replace: true });
   };
 
   return (

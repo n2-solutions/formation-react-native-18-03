@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 import {
   VStack,
-  Text,
   Heading,
   Spinner,
-  Box,
+  Button,
+  ButtonText,
   ScrollView,
 } from "@gluestack-ui/themed";
 import { useAuth } from "../../context/Auth";
@@ -13,11 +13,6 @@ import useApi from "../../hooks/useApi";
 import { Workout } from "../../types/workout";
 import WorkoutCard from "../../components/cards/Workout";
 import { useNavigate } from "react-router-native";
-
-// communiquer avec l'api
-// verifier qu'on a un token
-// donner le token a l'api
-// les afficher
 
 const WorkoutPage = () => {
   const navigate = useNavigate();
@@ -71,6 +66,15 @@ const WorkoutPage = () => {
           ))}
         </ScrollView>
       )}
+      <Button
+        width="100%"
+        my={15}
+        onTouchEnd={() => {
+          navigate(`/workout/new`);
+        }}
+      >
+        <ButtonText>Create a workout</ButtonText>
+      </Button>
     </VStack>
   );
 };

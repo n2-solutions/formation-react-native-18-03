@@ -12,8 +12,10 @@ import SignupPage from "./pages/Signup/Signup";
 import LoginPage from "./pages/Login/Login";
 import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
 import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
+import CreateWorkoutPage from "./pages/CreateWorkout/CreateWorkout";
 import useAndroidBackButtonHandler from "./hooks/useAndroidBackButtonHandler";
 import Header from "./components/layout/Header/Header";
+import EditWorkoutPage from "./pages/EditWorkout/EditWorkout";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -45,7 +47,9 @@ export default function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/workouts" element={<WorkoutListPage />} />
+              <Route path="/workout/new" element={<CreateWorkoutPage />} />
               <Route path="/workout/:id" element={<WorkoutDetailPage />} />
+              <Route path="/workout/:id/edit" element={<EditWorkoutPage />} />
             </Routes>
           </NativeRouter>
         </SafeAreaView>

@@ -34,13 +34,17 @@ const ExerciseCard = (props: ExerciseCardProps) => {
         </Text>
       </HStack>
       <Box>
-        {props.exercise.isCalisthenic && (
-          <HStack justifyContent="flex-end">
-            <Badge variant="outline" bgColor="$info">
+        <HStack justifyContent="flex-end">
+          {props.exercise.isCalisthenic ? (
+            <Badge variant="solid" action="info">
               <BadgeText>Calisthenic</BadgeText>
             </Badge>
-          </HStack>
-        )}
+          ) : (
+            <Badge variant="solid" action="info">
+              <BadgeText>With weights</BadgeText>
+            </Badge>
+          )}
+        </HStack>
       </Box>
     </VStack>
   );

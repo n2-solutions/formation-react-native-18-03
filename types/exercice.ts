@@ -23,6 +23,13 @@ export const defaultSetData: SetData = {
   weight: 0,
 };
 
+export const createNewExercise = (): Exercise => ({
+  name: "New Exercise",
+  sets: 4,
+  reps: 10,
+  isCalisthenic: false,
+});
+
 export function createDefaultSetsDataFromExercise(
   exercise: Exercise,
 ): Array<SetData> {

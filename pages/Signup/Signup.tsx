@@ -20,9 +20,9 @@ const SignupPage = () => {
   const { request, isLoading, errorMessage } = useApi();
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState("Nono Gambini");
+  const [email, setEmail] = useState("nono@n2.solutions");
+  const [password, setPassword] = useState("12345678A#");
 
   const handleSignup = async () => {
     const payload = { name, email, password };

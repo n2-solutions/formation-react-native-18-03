@@ -61,16 +61,14 @@ const WorkoutDetailPage = () => {
           <Button
             width="100%"
             variant="outline"
-            onTouchEnd={() => navigate(`/workout/${params.workoutId}/edit`)}
+            onTouchEnd={() => navigate(`/workout/${params.id}/edit`)}
           >
             <ButtonText>Edit this workout</ButtonText>
           </Button>
           <Button
             width="100%"
             my={15}
-            onTouchEnd={() =>
-              navigate(`/workout/${params.workoutId}/start-session`)
-            }
+            onTouchEnd={() => navigate(`/workout/${params.id}/start-session`)}
           >
             <ButtonText>Start this workout</ButtonText>
           </Button>

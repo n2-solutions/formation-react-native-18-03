@@ -9,10 +9,3 @@ export type Workout = {
 export type WorkoutWithExercises = Workout & {
   exercises: Array<Exercise>;
 };
-
-export const createNewExercise = () => ({
-  name: "New Exercise",
-  sets: 4,
-  reps: 10,
-  isCalisthenic: false,
-});

@@ -13,6 +13,7 @@ import LoginPage from "./pages/Login/Login";
 import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
 import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
 import useAndroidBackButtonHandler from "./hooks/useAndroidBackButtonHandler";
+import Header from "./components/layout/Header/Header";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -38,6 +39,7 @@ export default function App() {
         <SafeAreaView style={globalStyles.AndroidSafeArea}>
           <NativeRouter>
             {Platform.OS === "android" ? <BackButtonHandler /> : null}
+            <Header />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<SignupPage />} />

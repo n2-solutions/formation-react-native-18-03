@@ -24,6 +24,7 @@ import ExerciseEditCard from "../../components/cards/ExerciseEdit";
 // on veut editer un workout, cest a dire pouvoir ajouter, modifier, ou supprimer des exos
 
 const EditWorkoutPage = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const { request, isLoading, errorMessage } = useApi();
   const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
@@ -85,10 +86,16 @@ const EditWorkoutPage = () => {
   };
 
   const handleSaveWorkout = async () => {
-    // TODO appeller l'endpoint /workout/{workout_id} en PATCH
-    // - on peut reutiliser bien sur le hook useApi (on peut appeler request plusieurs fois)
-    // - attention a pas oublier le verbe PATCH
-    // - bien sur, si ca fonctionne, rediriger vers la liste des workouts
+    if (!workout) return;
+
+    try {
+      const response = await request(`/workout/${params.id}`, "PATCH", workout);
+
+      // navigate to workout list upon success
+      navigate("/workouts");
+    } catch (error) {
+      console.error("Save workout failed", error);
+    }
   };
 
   useEffect(() => {

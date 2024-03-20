@@ -24,11 +24,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState("12345678A#");
 
   const handleSignup = async () => {
-    const payload = { email, password };
+    const payload = {
+      email: email,
+      password: password,
+    };
 
     // je fais ma requete avec mon hook custom
     try {
-      const result = await request("/auth/login", "POST", payload);
+      await request("/auth/login", "POST", payload);
 
       navigate("/workouts", {
         replace: true,

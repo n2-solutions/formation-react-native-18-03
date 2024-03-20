@@ -41,6 +41,25 @@ describe("useApi hook", () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
   });
 
+  // Exemple de test pour gérer une erreur
+  it("handles request error correctly", async () => {
+    // on va mocker, juste pour ce test (ce it..) que fetch nous renvoie un token
+    (global.fetch as jest.Mock).mockRejectedValueOnce(
+      new Error("Failed to fetch"),
+    );
+
+    const { result } = renderHook(() => useApi());
+
+    await act(async () => {
+      await expect(result.current.request("/error", "GET")).rejects.toThrow(
+        "Unknown error",
+      );
+    });
+
+    // Vérifier que isLoading est bien passé à false après une erreur
+    expect(result.current.isLoading).toBe(false);
+  });
+
   it("should set the token on login/signup", async () => {
     // on mocke juste pour ce test, une fausse fonction setToken
     // jest.fn() permet de pouvoir faire une assertion pour verifier que la fonction a ete appellee

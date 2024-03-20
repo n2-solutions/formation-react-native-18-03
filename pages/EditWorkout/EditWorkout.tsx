@@ -84,6 +84,13 @@ const EditWorkoutPage = () => {
     });
   };
 
+  const handleSaveWorkout = async () => {
+    // TODO appeller l'endpoint /workout/{workout_id} en PATCH
+    // - on peut reutiliser bien sur le hook useApi (on peut appeler request plusieurs fois)
+    // - attention a pas oublier le verbe PATCH
+    // - bien sur, si ca fonctionne, rediriger vers la liste des workouts
+  };
+
   useEffect(() => {
     // premier chargement de la page, je vais faire ma requete GET
     fetchWorkout();
@@ -91,6 +98,7 @@ const EditWorkoutPage = () => {
 
   return (
     <VStack paddingLeft={15} paddingRight={15} alignItems="center">
+      <Text>{JSON.stringify(workout)}</Text>
       <Heading mb={30} textAlign="center" mt={40} size="lg">
         {`Editing workout ${workout?.name}`}
       </Heading>
@@ -110,7 +118,7 @@ const EditWorkoutPage = () => {
       <Button width="100%" variant="outline" onTouchEnd={appendEmptyExercise}>
         <ButtonText>Add an exercise</ButtonText>
       </Button>
-      <Button width="100%" marginTop={10}>
+      <Button width="100%" marginTop={10} onPress={handleSaveWorkout}>
         <ButtonText>Save this workout</ButtonText>
       </Button>
     </VStack>

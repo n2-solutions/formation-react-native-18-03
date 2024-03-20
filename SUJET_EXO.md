@@ -43,3 +43,12 @@ Avec ce que l'on a vu ajd et en s'inspirant du code existant :
 - créer la page
 - recuperer le detail d'UN workout (GET /workout/{workout_id}) avec useApi
 - faire un affichage avec la liste des exos
+
+## J3
+
+Coder la fonction handleSaveWorkout pour editer un workout dans EditWorkout.tsx
+
+- appeller l'endpoint /workout/{workout_id} en PATCH
+- on peut reutiliser bien sur le hook useApi (on peut appeler request plusieurs fois)
+- attention a pas oublier le verbe PATCH
+- bien sur, si ca fonctionne, rediriger vers la liste des workouts

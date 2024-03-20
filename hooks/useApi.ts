@@ -51,8 +51,8 @@ const useApi = () => {
       return result;
     } catch (error) {
       console.log("Error generale !", error);
-      throw new Error("Unknown error");
       setIsLoading(false);
+      throw new Error("Unknown error");
     }
   };
 

@@ -30,12 +30,14 @@ const useApi = () => {
       // je decode le body en JSON
       const result = await response.json();
 
+      // si j'arrive ici, ma requete est terminée
+      setIsLoading(false);
       // Si on ne recoit pas un code de type 2xx
       if (!response.ok) {
-        console.log("Erreur serveur :", result.message);
         setErrorMessage(result.message);
+
+        throw new Error(result.message);
       } else {
-        console.log("Reussite ", result);
         // si la requete est sur login ou signup, et qu'elle a reussi, on va stocker le token dans le contexte
         if (
           (url === "/auth/login" || url === "/auth/signup") &&
@@ -45,13 +47,11 @@ const useApi = () => {
         }
         setErrorMessage(null);
       }
-      // si j'arrive ici, ma requete est terminée
-      setIsLoading(false);
       // je renvoie le result, pour utilisation dans le composant
       return result;
     } catch (error) {
       console.log("Error generale !", error);
-      // si on a eu une grosse erreur... jenleve qd meme le loading
+      throw new Error("Unknown error");
       setIsLoading(false);
     }
   };

@@ -20,16 +20,13 @@ const HomePage = () => {
   useEffect(() => {
     // si on a pas de token, on redirige
     if (!token) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, []);
 
   return (
     <VStack paddingLeft={15} paddingRight={15} alignItems="center">
       <CircleLogo width={200} height={200} />
-      <Text>
-        Tu es sur la page d'accueil. Si tu vois ca bravo, tu es connecté
-      </Text>
     </VStack>
   );
 };

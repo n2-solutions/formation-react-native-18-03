@@ -1,7 +1,4 @@
-export function closestMultipleOfFive(
-  num: number,
-  direction: "up" | "down",
-): number {
+export function closestMultipleOfFive(num: number, direction: string): number {
   if (num % 5 === 0) {
     // Check if num is already a multiple of five
     if (direction === "up") {

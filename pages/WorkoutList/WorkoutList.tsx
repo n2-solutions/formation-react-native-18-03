@@ -52,24 +52,22 @@ const WorkoutPage = () => {
           {/* TODO : faire une jolie carte (dans un autre composant) qui affiche name, description, si possible une image
           illustrative. dans la carte 3 boutons : Editer le workout/Faire le workout/Voir l'historique du workout */}
           {workouts.map((workout) => (
-            <>
-              <WorkoutCard
-                key={workout.id}
-                workout={workout}
-                onEdit={function (id: number): void {
-                  navigate(`/workout/${id}/edit`);
-                }}
-                onView={function (id: number): void {
-                  navigate(`/workout/${id}`);
-                }}
-                onStart={function (id: number): void {
-                  navigate(`/workout/${id}/start-session`);
-                }}
-                onViewStats={function (id: number): void {
-                  navigate(`/workout/${id}/view-stats`);
-                }}
-              />
-            </>
+            <WorkoutCard
+              key={workout.id}
+              workout={workout}
+              onEdit={function (id: number): void {
+                navigate(`/workout/${id}/edit`);
+              }}
+              onView={function (id: number): void {
+                navigate(`/workout/${id}`);
+              }}
+              onStart={function (id: number): void {
+                navigate(`/workout/${id}/start-session`);
+              }}
+              onViewStats={function (id: number): void {
+                navigate(`/workout/${id}/view-stats`);
+              }}
+            />
           ))}
         </ScrollView>
       )}

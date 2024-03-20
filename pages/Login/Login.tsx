@@ -30,7 +30,9 @@ const LoginPage = () => {
     try {
       const result = await request("/auth/login", "POST", payload);
 
-      navigate("/workouts");
+      navigate("/workouts", {
+        replace: true,
+      });
     } catch (error) {
       console.error("Login failed", error);
     }

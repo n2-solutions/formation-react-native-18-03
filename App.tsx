@@ -12,6 +12,7 @@ import SignupPage from "./pages/Signup/Signup";
 import LoginPage from "./pages/Login/Login";
 import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
 import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
+import useAndroidBackButtonHandler from "./hooks/useAndroidBackButtonHandler";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -20,6 +21,12 @@ const globalStyles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
+
+function BackButtonHandler() {
+  useAndroidBackButtonHandler();
+
+  return null;
+}
 
 export default function App() {
   // if (Constants.expoConfig?.extra?.isStorybook) {
@@ -30,6 +37,7 @@ export default function App() {
       <GluestackUIProvider config={config}>
         <SafeAreaView style={globalStyles.AndroidSafeArea}>
           <NativeRouter>
+            {Platform.OS === "android" ? <BackButtonHandler /> : null}
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<SignupPage />} />

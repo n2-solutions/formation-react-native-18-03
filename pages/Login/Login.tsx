@@ -11,17 +11,27 @@ import {
   LinkText,
 } from "@gluestack-ui/themed";
 import CircleLogo from "../../components/logo/CircleLogo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useApi from "../../hooks/useApi";
 import { useAuth } from "../../context/Auth";
 import { useNavigate } from "react-router-native";
 
 const LoginPage = () => {
+  const { token, setToken } = useAuth();
+
   const { request, isLoading, errorMessage } = useApi();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("nono@n2.solutions");
   const [password, setPassword] = useState("12345678A#");
+
+  // si un token apparait...
+  useEffect(() => {
+    // je vais sur ma page de workouts
+    if (token) {
+      navigate("/workouts", { replace: true });
+    }
+  }, [token]);
 
   const handleSignup = async () => {
     const payload = {

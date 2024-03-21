@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type AuthContextType = {
   token: string | null;
@@ -22,8 +29,34 @@ export function AuthProvider(props: AuthProviderProps) {
   // dedans, jai un state qui stockera mon token.
   const [token, setToken] = useState<string | null>(null);
 
+  // sauvegarde notre token dans le state ET dans l'async storage
+  const setTokenAndPersist = (newToken: string | null) => {
+    setToken(newToken);
+    if (newToken === null) {
+      AsyncStorage.removeItem("authToken");
+    } else {
+      AsyncStorage.setItem("authToken", newToken);
+    }
+  };
+
+  useEffect(() => {
+    const loadToken = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem("authToken");
+
+        if (storedToken !== null) {
+          setToken(storedToken);
+        }
+      } catch (error) {
+        console.error("Failed to load the token from AsyncStorage", error);
+      }
+    };
+
+    loadToken();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken: setTokenAndPersist }}>
       {props.children}
     </AuthContext.Provider>
   );

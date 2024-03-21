@@ -32,29 +32,29 @@ function BackButtonHandler() {
 }
 
 export default function App() {
-  // if (Constants.expoConfig?.extra?.isStorybook) {
-  //   return <StorybookUIRoot />;
-  // } else {
-  return (
-    <AuthProvider>
-      <GluestackUIProvider config={config}>
-        <SafeAreaView style={globalStyles.AndroidSafeArea}>
-          <NativeRouter>
-            {Platform.OS === "android" ? <BackButtonHandler /> : null}
-            <Header />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/workouts" element={<WorkoutListPage />} />
-              <Route path="/workout/new" element={<CreateWorkoutPage />} />
-              <Route path="/workout/:id" element={<WorkoutDetailPage />} />
-              <Route path="/workout/:id/edit" element={<EditWorkoutPage />} />
-            </Routes>
-          </NativeRouter>
-        </SafeAreaView>
-      </GluestackUIProvider>
-    </AuthProvider>
-  );
-  // }
+  if (Constants.expoConfig?.extra?.isStorybook) {
+    return <StorybookUIRoot />;
+  } else {
+    return (
+      <AuthProvider>
+        <GluestackUIProvider config={config}>
+          <SafeAreaView style={globalStyles.AndroidSafeArea}>
+            <NativeRouter>
+              {Platform.OS === "android" ? <BackButtonHandler /> : null}
+              <Header />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/workouts" element={<WorkoutListPage />} />
+                <Route path="/workout/new" element={<CreateWorkoutPage />} />
+                <Route path="/workout/:id" element={<WorkoutDetailPage />} />
+                <Route path="/workout/:id/edit" element={<EditWorkoutPage />} />
+              </Routes>
+            </NativeRouter>
+          </SafeAreaView>
+        </GluestackUIProvider>
+      </AuthProvider>
+    );
+  }
 }

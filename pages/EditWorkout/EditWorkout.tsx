@@ -1,28 +1,12 @@
 import * as React from "react";
-import {
-  VStack,
-  Text,
-  Input,
-  InputField,
-  Heading,
-  Button,
-  ButtonText,
-  Box,
-  ButtonSpinner,
-  ScrollView,
-} from "@gluestack-ui/themed";
-import CircleLogo from "../../components/logo/CircleLogo";
 import { useNavigate, useParams } from "react-router-native";
-import { useAuth } from "../../context/Auth";
 import { useEffect, useState } from "react";
 import useApi from "../../hooks/useApi";
 import { WorkoutWithExercises } from "../../types/workout";
 import { Exercise, createNewExercise } from "../../types/exercise";
-import ExerciseCard from "../../components/cards/Exercise";
-import ExerciseEditCard from "../../components/cards/ExerciseEdit";
+import EditWorkoutView from "./EditWorkoutView";
 
 // on veut editer un workout, cest a dire pouvoir ajouter, modifier, ou supprimer des exos
-
 const EditWorkoutPage = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -104,31 +88,13 @@ const EditWorkoutPage = () => {
   }, []);
 
   return (
-    <VStack paddingLeft={15} paddingRight={15} alignItems="center">
-      <Text>{JSON.stringify(workout)}</Text>
-      <Heading mb={30} textAlign="center" mt={40} size="lg">
-        {`Editing workout ${workout?.name}`}
-      </Heading>
-      <ScrollView>
-        {workout?.exercises.map((exercise, index) => (
-          <ExerciseEditCard
-            exercise={exercise as Exercise}
-            onEdit={(exercise) => {
-              updateExerciseAtIndex(index, exercise);
-            }}
-            onDelete={() => {
-              deleteExerciseAtIndex(index);
-            }}
-          />
-        ))}
-      </ScrollView>
-      <Button width="100%" variant="outline" onTouchEnd={appendEmptyExercise}>
-        <ButtonText>Add an exercise</ButtonText>
-      </Button>
-      <Button width="100%" marginTop={10} onPress={handleSaveWorkout}>
-        <ButtonText>Save this workout</ButtonText>
-      </Button>
-    </VStack>
+    <EditWorkoutView
+      workout={workout}
+      onUpdateExercise={updateExerciseAtIndex}
+      onDeleteExercise={deleteExerciseAtIndex}
+      onAddExercise={appendEmptyExercise}
+      onSaveWorkout={handleSaveWorkout}
+    />
   );
 };
 

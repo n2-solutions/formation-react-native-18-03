@@ -67,12 +67,12 @@ function ExerciseEditCard(props: ExerciseEditCardProps) {
                 value={props.exercise.name}
                 testID="nameInput"
                 selectTextOnFocus
-                onChangeText={(name: string) =>
+                onChangeText={(name: string) => {
                   props.onEdit({
                     ...props.exercise,
                     name,
-                  })
-                }
+                  });
+                }}
               />
             </Input>
             <Button

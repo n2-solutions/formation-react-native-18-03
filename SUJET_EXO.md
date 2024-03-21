@@ -52,3 +52,15 @@ Coder la fonction handleSaveWorkout pour editer un workout dans EditWorkout.tsx
 - on peut reutiliser bien sur le hook useApi (on peut appeler request plusieurs fois)
 - attention a pas oublier le verbe PATCH
 - bien sur, si ca fonctionne, rediriger vers la liste des workouts
+
+## J4
+
+Coder la page StartNewSession
+
+```jsx
+<Route path="/workout/:id/start-session" element={<StartSessionPage />} />
+```
+
+- Cest juste une page qui reprend le nom du workout, avec un texte du genre "About to start workout : workout.name"
+- Du coup... ben il faut fetch le workout
+- Quand on clique sur le bouton, faire un post sur /session

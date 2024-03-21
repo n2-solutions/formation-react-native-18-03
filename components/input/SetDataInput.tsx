@@ -31,7 +31,6 @@ export type SetDataInputProps = {
 export default function SetDataInput(props: SetDataInputProps) {
   return (
     <Box width="100%" bg="$primary50" borderRadius={10} px={15}>
-      {/* WEIGHT */}
       <HStack my={15} justifyContent="space-evenly" alignItems="center">
         <Button
           variant="link"

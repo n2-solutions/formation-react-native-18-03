@@ -22,7 +22,7 @@ const LoginPage = () => {
   const { request, isLoading, errorMessage } = useApi();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("nono@n2.solutions");
+  const [email, setEmail] = useState("ronnie@n2.solutions");
   const [password, setPassword] = useState("12345678A#");
 
   // si un token apparait...

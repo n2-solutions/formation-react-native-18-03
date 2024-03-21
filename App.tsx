@@ -60,7 +60,7 @@ export default function App() {
                   element={<EditWorkoutPage />}
                 />
                 <Route
-                  path="/workout/:workoutId/session/:id"
+                  path="/workout/:workoutId/session/:sessionId"
                   element={<OngoingSessionPage />}
                 />
                 <Route

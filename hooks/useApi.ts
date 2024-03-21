@@ -50,7 +50,6 @@ const useApi = () => {
       // je renvoie le result, pour utilisation dans le composant
       return result;
     } catch (error) {
-      console.log("Error generale !", error);
       setIsLoading(false);
       throw new Error("Unknown error");
     }

@@ -8,6 +8,7 @@
     "ios": "expo start --ios",
     "storybook": "IS_STORYBOOK=true expo start",
     "test": "jest",
+    "test:watch": "jest --watch",
     "storybook-generate": "sb-rn-get-stories"
   },
   "dependencies": {

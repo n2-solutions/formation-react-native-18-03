@@ -1,5 +1,5 @@
 import React from "react";
-import { Exercise } from "../../types/exercice";
+import { Exercise } from "../../types/exercise";
 import {
   Box,
   HStack,

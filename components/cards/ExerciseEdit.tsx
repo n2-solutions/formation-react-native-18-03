@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-import { Exercise } from "../../types/exercice";
+import { Exercise } from "../../types/exercise";
 import {
   Box,
   HStack,
@@ -65,6 +65,7 @@ function ExerciseEditCard(props: ExerciseEditCardProps) {
                 ref={inputRef}
                 placeholder="name"
                 value={props.exercise.name}
+                testID="nameInput"
                 selectTextOnFocus
                 onChangeText={(name: string) =>
                   props.onEdit({
@@ -78,7 +79,8 @@ function ExerciseEditCard(props: ExerciseEditCardProps) {
               variant="solid"
               action="positive"
               size="sm"
-              onTouchEnd={toggleEditing}
+              testID="saveButton"
+              onPress={toggleEditing}
             >
               <ButtonText>Save</ButtonText>
             </Button>
@@ -94,8 +96,9 @@ function ExerciseEditCard(props: ExerciseEditCardProps) {
                 action="positive"
                 size="sm"
                 mx={10}
-                onTouchEnd={handleEditName}
+                onPress={handleEditName}
                 accessibilityHint="Edit"
+                testID="editButton"
               >
                 <ButtonIcon as={EditIcon} />
               </Button>
@@ -103,7 +106,8 @@ function ExerciseEditCard(props: ExerciseEditCardProps) {
                 variant="solid"
                 action="negative"
                 size="sm"
-                onTouchEnd={props.onDelete}
+                testID="deleteButton"
+                onPress={props.onDelete}
               >
                 <ButtonIcon as={TrashIcon} />
               </Button>

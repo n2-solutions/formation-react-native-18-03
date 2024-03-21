@@ -17,7 +17,7 @@ import { useAuth } from "../../context/Auth";
 import { useEffect, useState } from "react";
 import useApi from "../../hooks/useApi";
 import { WorkoutWithExercises } from "../../types/workout";
-import { Exercise, createNewExercise } from "../../types/exercice";
+import { Exercise, createNewExercise } from "../../types/exercise";
 import ExerciseCard from "../../components/cards/Exercise";
 import ExerciseEditCard from "../../components/cards/ExerciseEdit";
 

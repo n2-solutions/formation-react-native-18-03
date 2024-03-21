@@ -1,4 +1,4 @@
-import { Exercise } from "./exercice";
+import { Exercise } from "./exercise";
 
 export type Workout = {
   id: number;

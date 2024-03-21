@@ -26,7 +26,7 @@ const WorkoutDetailPage = () => {
   const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
 
   const fetchWorkout = async () => {
-    const result = await request("/workout/" + params.id, "GET");
+    const result = await request("/workout/" + params.workoutId, "GET");
 
     console.log(result);
 
@@ -61,14 +61,16 @@ const WorkoutDetailPage = () => {
           <Button
             width="100%"
             variant="outline"
-            onTouchEnd={() => navigate(`/workout/${params.id}/edit`)}
+            onTouchEnd={() => navigate(`/workout/${params.workoutId}/edit`)}
           >
             <ButtonText>Edit this workout</ButtonText>
           </Button>
           <Button
             width="100%"
             my={15}
-            onTouchEnd={() => navigate(`/workout/${params.id}/start-session`)}
+            onTouchEnd={() =>
+              navigate(`/workout/${params.workoutId}/start-session`)
+            }
           >
             <ButtonText>Start this workout</ButtonText>
           </Button>

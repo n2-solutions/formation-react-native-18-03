@@ -14,7 +14,7 @@ const EditWorkoutPage = () => {
   const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
 
   const fetchWorkout = async () => {
-    const result = await request("/workout/" + params.id, "GET");
+    const result = await request("/workout/" + params.workoutId, "GET");
 
     setWorkout(result);
   };
@@ -79,7 +79,11 @@ const EditWorkoutPage = () => {
     if (!workout) return;
 
     try {
-      const response = await request(`/workout/${params.id}`, "PATCH", workout);
+      const response = await request(
+        `/workout/${params.workoutId}`,
+        "PATCH",
+        workout,
+      );
 
       // navigate to workout list upon success
       navigate("/workouts");

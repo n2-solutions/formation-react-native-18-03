@@ -25,7 +25,7 @@ const StartSessionPage = () => {
   const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
 
   const fetchWorkout = async () => {
-    const result = await request("/workout/" + params.id, "GET");
+    const result = await request("/workout/" + params.workoutId, "GET");
 
     console.log(result);
 
@@ -44,6 +44,7 @@ const StartSessionPage = () => {
       });
 
       // la session est créée, on navigue vers la page de session en cours
+      navigate(`/workout/${workout?.id}/session/${response.id}`);
     } catch (e) {
       console.log(e);
     }

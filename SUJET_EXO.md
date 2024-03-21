@@ -55,7 +55,7 @@ Coder la fonction handleSaveWorkout pour editer un workout dans EditWorkout.tsx
 
 ## J4
 
-Coder la page StartNewSession
+### Coder la page StartNewSession
 
 ```jsx
 <Route path="/workout/:id/start-session" element={<StartSessionPage />} />
@@ -64,3 +64,48 @@ Coder la page StartNewSession
 - Cest juste une page qui reprend le nom du workout, avec un texte du genre "About to start workout : workout.name"
 - Du coup... ben il faut fetch le workout
 - Quand on clique sur le bouton, faire un post sur /session
+
+### Coder la page OngoingSession
+
+- Je sais que...
+  - on a un composant SetDataInput qui va nous servir pour la saisie d'un exo
+  - on a tous les exos dans workout.exercises, on a plus qu'a les utiliser
+  - il faudrait afficher un seul exo a la fois...
+    - quand on appuie sur done, ca passe a la serie suivante, ou bien si on a fait toutes les series de l'exo, ca passe a l'exo suivant
+    - du coup... il faudrait sans doute stocker sur quel exo on se trouve... et sur quelle serie on se trouve :)
+
+#### Le payload
+
+Je vais faire un `POST` sur `/session_exercise`. Exemple :
+
+Si j'ai fait pour mon exercice :
+
+10 repetitions a 40kg puis
+10 repetitions a 35kg puis
+8 repetitions a 30kg puis
+8 repetitions a 30kg
+
+je veux envoyer a l'API :
+
+```json
+{
+  "reps": [10, 10, 8, 8],
+  "weights": [40, 35, 30, 30],
+  "session_id": 0,
+  "exercise_id": 0
+}
+```
+
+(Si exo calisthenic -> on envoie `"weights": [0, 0, 0, 0]`)
+
+##### Eh oh cest beaucoup la !
+
+On peut commencer plus simplement en gerant un seul exercice.
+
+```
+  const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
+
+  const currentExercise = workout.exercises[0];
+```
+
+et s'occuper juste de cet unique exo. Quand ca fonctionne, on s'occupe de faire marcher la boucle

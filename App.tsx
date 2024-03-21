@@ -18,6 +18,7 @@ import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
 import CreateWorkoutPage from "./pages/CreateWorkout/CreateWorkout";
 import EditWorkoutPage from "./pages/EditWorkout/EditWorkout";
 import StartSessionPage from "./pages/StartSession/StartSession";
+import OngoingSessionPage from "./pages/OngoingSession/OngoingSession";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -50,10 +51,20 @@ export default function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/workouts" element={<WorkoutListPage />} />
                 <Route path="/workout/new" element={<CreateWorkoutPage />} />
-                <Route path="/workout/:id" element={<WorkoutDetailPage />} />
-                <Route path="/workout/:id/edit" element={<EditWorkoutPage />} />
                 <Route
-                  path="/workout/:id/start-session"
+                  path="/workout/:workoutId"
+                  element={<WorkoutDetailPage />}
+                />
+                <Route
+                  path="/workout/:workoutId/edit"
+                  element={<EditWorkoutPage />}
+                />
+                <Route
+                  path="/workout/:workoutId/session/:id"
+                  element={<OngoingSessionPage />}
+                />
+                <Route
+                  path="/workout/:workoutId/start-session"
                   element={<StartSessionPage />}
                 />
               </Routes>

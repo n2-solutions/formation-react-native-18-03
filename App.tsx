@@ -7,15 +7,17 @@ import Constants from "expo-constants";
 import { StyleSheet, Platform, StatusBar } from "react-native";
 import { AuthProvider } from "./context/Auth";
 
+import useAndroidBackButtonHandler from "./hooks/useAndroidBackButtonHandler";
+import Header from "./components/layout/Header/Header";
+
 import HomePage from "./pages/Home/Home";
 import SignupPage from "./pages/Signup/Signup";
 import LoginPage from "./pages/Login/Login";
 import WorkoutListPage from "./pages/WorkoutList/WorkoutList";
 import WorkoutDetailPage from "./pages/WorkoutDetail/WorkoutDetail";
 import CreateWorkoutPage from "./pages/CreateWorkout/CreateWorkout";
-import useAndroidBackButtonHandler from "./hooks/useAndroidBackButtonHandler";
-import Header from "./components/layout/Header/Header";
 import EditWorkoutPage from "./pages/EditWorkout/EditWorkout";
+import StartSessionPage from "./pages/StartSession/StartSession";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -50,6 +52,10 @@ export default function App() {
                 <Route path="/workout/new" element={<CreateWorkoutPage />} />
                 <Route path="/workout/:id" element={<WorkoutDetailPage />} />
                 <Route path="/workout/:id/edit" element={<EditWorkoutPage />} />
+                <Route
+                  path="/workout/:id/start-session"
+                  element={<StartSessionPage />}
+                />
               </Routes>
             </NativeRouter>
           </SafeAreaView>

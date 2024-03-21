@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useApi from "../../hooks/useApi";
 import { WorkoutWithExercises } from "../../types/workout";
 import { Exercise, createNewExercise } from "../../types/exercise";
@@ -19,40 +19,46 @@ const EditWorkoutPage = () => {
     setWorkout(result);
   };
 
-  const deleteExerciseAtIndex = (index: number) => {
-    // si on a pas de workout (l'api est encore en train de charger, ou a echoué, alors je return (je sors de la fonction))
-    if (!workout) return;
+  const deleteExerciseAtIndex = useCallback(
+    (index: number) => {
+      // si on a pas de workout (l'api est encore en train de charger, ou a echoué, alors je return (je sors de la fonction))
+      if (!workout) return;
 
-    // je recopie mes exos
-    const updatedExercises = [...workout.exercises];
+      // je recopie mes exos
+      const updatedExercises = [...workout.exercises];
 
-    // je vais supprimer l'index en question
-    // splice : supprime a l'index donné, N elements
-    updatedExercises.splice(index, 1);
+      // je vais supprimer l'index en question
+      // splice : supprime a l'index donné, N elements
+      updatedExercises.splice(index, 1);
 
-    setWorkout({
-      ...workout,
-      exercises: updatedExercises,
-    });
-  };
+      setWorkout({
+        ...workout,
+        exercises: updatedExercises,
+      });
+    },
+    [workout],
+  );
 
-  const updateExerciseAtIndex = (index: number, updatedExercise: Exercise) => {
-    if (!workout) return;
+  const updateExerciseAtIndex = useCallback(
+    (index: number, updatedExercise: Exercise) => {
+      if (!workout) return;
 
-    // on recopie les exos
-    const updatedExercises = [...workout.exercises];
+      // on recopie les exos
+      const updatedExercises = [...workout.exercises];
 
-    // on modifie juste l'exo qui a changé
-    updatedExercises[index] = updatedExercise;
+      // on modifie juste l'exo qui a changé
+      updatedExercises[index] = updatedExercise;
 
-    // on sauvegarde le tout
-    setWorkout({
-      ...workout,
-      exercises: updatedExercises,
-    });
-  };
+      // on sauvegarde le tout
+      setWorkout({
+        ...workout,
+        exercises: updatedExercises,
+      });
+    },
+    [workout],
+  );
 
-  const appendEmptyExercise = () => {
+  const appendEmptyExercise = useCallback(() => {
     // si on a pas de workout (l'api est encore en train de charger, ou a echoué, alors je return (je sors de la fonction))
     if (!workout) return;
 
@@ -67,9 +73,9 @@ const EditWorkoutPage = () => {
         createNewExercise(),
       ],
     });
-  };
+  }, [workout]);
 
-  const handleSaveWorkout = async () => {
+  const handleSaveWorkout = useCallback(async () => {
     if (!workout) return;
 
     try {
@@ -80,7 +86,7 @@ const EditWorkoutPage = () => {
     } catch (error) {
       console.error("Save workout failed", error);
     }
-  };
+  }, [workout, request]);
 
   useEffect(() => {
     // premier chargement de la page, je vais faire ma requete GET

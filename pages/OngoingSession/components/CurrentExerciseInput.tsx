@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 export type CurrentExerciseInputProps = {
   exercise: Exercise;
   onExerciseCompleted: (setsData: Array<SetData>) => void;
+  hasCompletedWorkout: boolean;
 };
 
 function CurrentExerciseInput(props: CurrentExerciseInputProps) {
@@ -64,6 +65,17 @@ function CurrentExerciseInput(props: CurrentExerciseInputProps) {
     }
   };
 
+  const getSetDoneButtonText = () => {
+    if (props.hasCompletedWorkout) {
+      return "Workout completed";
+    }
+    if (hasRemainingSet) {
+      return "Set Done";
+    } else {
+      return "Next exercise";
+    }
+  };
+
   // useEffect avec tableau de dependance qui contient exercise
   // ===> callback appelé quand la prop exercise change
   useEffect(() => {
@@ -104,8 +116,14 @@ function CurrentExerciseInput(props: CurrentExerciseInputProps) {
         </Box>
 
         {/* un bouton pour dire que jai fini ma série */}
-        <Button size="sm" action="positive" mt={5} onPress={handleSetDone}>
-          <ButtonText>Set done</ButtonText>
+        <Button
+          size="sm"
+          action="positive"
+          mt={5}
+          isDisabled={props.hasCompletedWorkout}
+          onPress={handleSetDone}
+        >
+          <ButtonText>{getSetDoneButtonText()}</ButtonText>
         </Button>
       </HStack>
     </Box>

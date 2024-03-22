@@ -1,5 +1,12 @@
 import * as React from "react";
-import { VStack, Text, Input, InputField, Heading } from "@gluestack-ui/themed";
+import {
+  VStack,
+  Text,
+  Input,
+  InputField,
+  Heading,
+  HStack,
+} from "@gluestack-ui/themed";
 import { useNavigate, useParams } from "react-router-native";
 import { useEffect, useState } from "react";
 import useApi from "../../hooks/useApi";
@@ -20,6 +27,10 @@ const OngoingSessionPage = () => {
   const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
   // quel exercise on est en train de faire ?
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState<number>(0);
+  // liste des exos finis
+  const [completedExercises, setCompletedExercises] = useState<Array<string>>(
+    [],
+  );
 
   const canGoToNextExercise = () => {
     if (!workout || !workout.exercises.length) {
@@ -75,6 +86,14 @@ const OngoingSessionPage = () => {
       if (canGoToNextExercise()) {
         setCurrentExerciseIndex(currentExerciseIndex + 1);
       }
+
+      // on stocke le nom de l'exo que l'on a terminé
+      setCompletedExercises([
+        // je recopie les anciens exos terminés
+        ...completedExercises,
+        // TODO comprendre prq il faut le !
+        getCurrentExercise()?.name!,
+      ]);
     } catch (e) {
       console.log(e);
     }
@@ -97,8 +116,29 @@ const OngoingSessionPage = () => {
           onExerciseCompleted={(setsData: SetData[]) => {
             persistSetsData(setsData);
           }}
+          hasCompletedWorkout={
+            // est ce que jai terminé autant d'exos qu'il y a dans notre workout
+            completedExercises.length === workout.exercises.length
+          }
         />
       ) : null}
+      {completedExercises.length > 0 && (
+        <VStack>
+          <Heading
+            textAlign="center"
+            mt={10}
+            mb={5}
+            size="md"
+          >{`Completed exercises :`}</Heading>
+          {completedExercises.map((exercise) => (
+            <HStack key={exercise} justifyContent="space-around" p={4}>
+              <Heading size="sm" numberOfLines={2}>
+                {exercise}
+              </Heading>
+            </HStack>
+          ))}
+        </VStack>
+      )}
     </VStack>
   );
 };

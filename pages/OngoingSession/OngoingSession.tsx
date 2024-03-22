@@ -21,6 +21,18 @@ const OngoingSessionPage = () => {
   // quel exercise on est en train de faire ?
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState<number>(0);
 
+  const canGoToNextExercise = () => {
+    if (!workout || !workout.exercises.length) {
+      return false;
+    } else {
+      if (currentExerciseIndex < workout.exercises.length - 1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   // recuperer l'exercise en cours selon l'index
   const getCurrentExercise = (): Exercise | null => {
     if (!workout) {
@@ -40,6 +52,34 @@ const OngoingSessionPage = () => {
     setWorkout(result);
   };
 
+  const persistSetsData = async (setsData: SetData[]) => {
+    const reps: Array<number> = [];
+    const weights: Array<number> = [];
+
+    setsData.forEach((setData) => {
+      reps.push(setData.reps);
+      weights.push(setData.weight);
+    });
+
+    const payload = {
+      reps,
+      weights,
+      session_id: parseInt(params.sessionId!),
+      exercise_id: getCurrentExercise()?.id,
+    };
+
+    try {
+      await request("/session_exercise", "POST", payload);
+
+      // si il reste des exos, on avance
+      if (canGoToNextExercise()) {
+        setCurrentExerciseIndex(currentExerciseIndex + 1);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // appeller une fonction au premier rendu
   useEffect(() => {
     // premier chargement de la page, je vais faire ma requete GET
@@ -54,13 +94,8 @@ const OngoingSessionPage = () => {
       {workout && getCurrentExercise() !== null ? (
         <CurrentExerciseInput
           exercise={getCurrentExercise() as Exercise}
-          onExerciseCompleted={function (setsData: SetData[]): void {
-            console.log(
-              "lexo est terminé, voici la saisie utilisateur",
-              setsData,
-            );
-
-            // TODO saisie POST sur session_exercise
+          onExerciseCompleted={(setsData: SetData[]) => {
+            persistSetsData(setsData);
           }}
         />
       ) : null}

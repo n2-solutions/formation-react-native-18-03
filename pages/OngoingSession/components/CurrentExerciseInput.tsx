@@ -5,7 +5,7 @@ import {
   SetData,
   createDefaultSetsDataFromExercise,
 } from "../../../types/exercise";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type CurrentExerciseInputProps = {
   exercise: Exercise;
@@ -63,6 +63,15 @@ function CurrentExerciseInput(props: CurrentExerciseInputProps) {
       props.onExerciseCompleted(setsData);
     }
   };
+
+  // useEffect avec tableau de dependance qui contient exercise
+  // ===> callback appelé quand la prop exercise change
+  useEffect(() => {
+    // hop je me remet au debut de la série
+    updateCurrentSetIndex(0);
+    // je veux reinitialiser mon setData a vide, selon les infos du nouvel exo
+    updateSetsData(createDefaultSetsDataFromExercise(props.exercise));
+  }, [props.exercise]);
 
   return (
     <Box width="100%" bg="$primary50" borderRadius={10} padding={15}>

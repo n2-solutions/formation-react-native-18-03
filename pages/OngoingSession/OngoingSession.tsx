@@ -6,6 +6,7 @@ import {
   InputField,
   Heading,
   HStack,
+  Box,
 } from "@gluestack-ui/themed";
 import { useNavigate, useParams } from "react-router-native";
 import { useEffect, useState } from "react";
@@ -13,6 +14,8 @@ import useApi from "../../hooks/useApi";
 import { WorkoutWithExercises } from "../../types/workout";
 import CurrentExerciseInput from "./components/CurrentExerciseInput";
 import { Exercise, SetData } from "../../types/exercise";
+import { Animated } from "react-native";
+import NextExerciseInput from "./components/NextExerciseInput";
 
 const OngoingSessionPage = () => {
   // useParams = recuperer les parametres de la route (ici on a workoutId et sessionId)
@@ -31,6 +34,9 @@ const OngoingSessionPage = () => {
   const [completedExercises, setCompletedExercises] = useState<Array<string>>(
     [],
   );
+
+  // mes animations
+  const [slideAnimOut] = useState(new Animated.Value(0)); // For sliding out
 
   const canGoToNextExercise = () => {
     if (!workout || !workout.exercises.length) {
@@ -82,6 +88,20 @@ const OngoingSessionPage = () => {
     try {
       await request("/session_exercise", "POST", payload);
 
+      // je joue mon animation si la requete a reussi
+      Animated.timing(slideAnimOut, {
+        // je veux que ma valeur aille a -400
+        // (pour rappel cette valeur est branchée sur le translateX)
+        toValue: -400,
+        // je veux que ca dure une demi seconde
+        duration: 500,
+        // je veux utiliser le GPU du tel si possible
+        useNativeDriver: true,
+      }).start(() => {
+        // un callback appelé quand l'animation est terminée
+        slideAnimOut.setValue(0); // Reset slide-out animation
+      });
+
       // si il reste des exos, on avance
       if (canGoToNextExercise()) {
         setCurrentExerciseIndex(currentExerciseIndex + 1);
@@ -110,18 +130,28 @@ const OngoingSessionPage = () => {
       <Heading mb={30} textAlign="center" mt={5} size="xl">
         {`Doing workout ${workout?.name}`}
       </Heading>
-      {workout && getCurrentExercise() !== null ? (
-        <CurrentExerciseInput
-          exercise={getCurrentExercise() as Exercise}
-          onExerciseCompleted={(setsData: SetData[]) => {
-            persistSetsData(setsData);
+      <Box width="100%">
+        <Animated.View
+          style={{
+            transform: [{ translateX: slideAnimOut }],
           }}
-          hasCompletedWorkout={
-            // est ce que jai terminé autant d'exos qu'il y a dans notre workout
-            completedExercises.length === workout.exercises.length
-          }
-        />
-      ) : null}
+        >
+          {workout && getCurrentExercise() !== null ? (
+            <CurrentExerciseInput
+              exercise={getCurrentExercise() as Exercise}
+              onExerciseCompleted={(setsData: SetData[]) => {
+                persistSetsData(setsData);
+              }}
+              hasCompletedWorkout={
+                // est ce que jai terminé autant d'exos qu'il y a dans notre workout
+                completedExercises.length === workout.exercises.length
+              }
+            />
+          ) : null}
+        </Animated.View>
+        <NextExerciseInput />
+      </Box>
+
       {completedExercises.length > 0 && (
         <VStack>
           <Heading

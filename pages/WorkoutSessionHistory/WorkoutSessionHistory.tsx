@@ -36,21 +36,27 @@ const WorkoutSessionHistory = () => {
                 labels: e.sessions.map((s) =>
                   format(new Date(s.created_at), "dd/MM"),
                 ),
+                // objectif : fabriquer un tableau avec nos data sur lesquelles ont veut un graphique
+                // cad un tableau de number ( soit des series, soit un poids max)
                 datasets: [
                   {
-                    // TODO : fabriquer le tableau de data [] pour faire de zoli graphiques, en se basant
-                    // sur les infos de workout_with_sessions (testData a coté de cette page)
-                    // Pour rappel :
-                    //  si calisthenic je veux le nombre moyen de répétitions par série
-                    // si exo normal je veux le poids maximal soulevé par session
-                    // bien entendu, une case de data = 1 session
-                    // dans notre fichier de test, on a 3 sessions
-                    //
-                    data: [
-                      Math.random() * 100,
-                      Math.random() * 100,
-                      Math.random() * 100,
-                    ],
+                    data: e.sessions.map((session) => {
+                      // premiere grande question, est-ce que je suis sur un exo en PDC ou pas (isCalisthenic)
+                      if (e.isCalisthenic) {
+                        // initalisation de la somme des repetitions
+                        let totalReps = 0;
+                        // on remplit avec foreach
+                        session.reps.forEach((rep) => {
+                          totalReps += rep;
+                        });
+
+                        const avg = totalReps / session.reps.length;
+                        return avg;
+                      } else {
+                        // on veut le poids maximal soulevé dans la session
+                        return Math.max(...session.weights);
+                      }
+                    }),
                   },
                 ],
               }}

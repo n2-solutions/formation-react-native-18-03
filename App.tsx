@@ -19,6 +19,7 @@ import CreateWorkoutPage from "./pages/CreateWorkout/CreateWorkout";
 import EditWorkoutPage from "./pages/EditWorkout/EditWorkout";
 import StartSessionPage from "./pages/StartSession/StartSession";
 import OngoingSessionPage from "./pages/OngoingSession/OngoingSession";
+import WorkoutSessionHistoryPage from "./pages/WorkoutSessionHistory/WorkoutSessionHistory";
 
 const globalStyles = StyleSheet.create({
   AndroidSafeArea: {
@@ -66,6 +67,10 @@ export default function App() {
                 <Route
                   path="/workout/:workoutId/start-session"
                   element={<StartSessionPage />}
+                />
+                <Route
+                  path="/workout/:workoutId/view-stats"
+                  element={<WorkoutSessionHistoryPage />}
                 />
               </Routes>
             </NativeRouter>

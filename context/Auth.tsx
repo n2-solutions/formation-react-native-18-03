@@ -44,6 +44,8 @@ export function AuthProvider(props: AuthProviderProps) {
       try {
         const storedToken = await AsyncStorage.getItem("authToken");
 
+        console.log("storedToken", storedToken);
+
         if (storedToken !== null) {
           setToken(storedToken);
         }

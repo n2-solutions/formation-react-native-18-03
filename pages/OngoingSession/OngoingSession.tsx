@@ -16,6 +16,7 @@ import CurrentExerciseInput from "./components/CurrentExerciseInput";
 import { Exercise, SetData } from "../../types/exercise";
 import { Animated } from "react-native";
 import NextExerciseInput from "./components/NextExerciseInput";
+import { A } from "@expo/html-elements";
 
 const OngoingSessionPage = () => {
   // useParams = recuperer les parametres de la route (ici on a workoutId et sessionId)
@@ -36,7 +37,8 @@ const OngoingSessionPage = () => {
   );
 
   // mes animations
-  const [slideAnimOut] = useState(new Animated.Value(0)); // For sliding out
+  const [slideAnimOut] = useState(new Animated.Value(0)); // le currentExercise qui part a gauche
+  const [slideAnimIn] = useState(new Animated.Value(400)); // le nextExercise qui arrive de droite
 
   const canGoToNextExercise = () => {
     if (!workout || !workout.exercises.length) {
@@ -88,7 +90,7 @@ const OngoingSessionPage = () => {
     try {
       await request("/session_exercise", "POST", payload);
 
-      // je joue mon animation si la requete a reussi
+      // je joue mes animations si la requete a reussi
       Animated.timing(slideAnimOut, {
         // je veux que ma valeur aille a -400
         // (pour rappel cette valeur est branchée sur le translateX)
@@ -102,18 +104,33 @@ const OngoingSessionPage = () => {
         slideAnimOut.setValue(0); // Reset slide-out animation
       });
 
-      // si il reste des exos, on avance
-      if (canGoToNextExercise()) {
-        setCurrentExerciseIndex(currentExerciseIndex + 1);
-      }
+      // je joue mon animation si la requete a reussi
+      Animated.timing(slideAnimIn, {
+        // je veux que ma valeur aille a -400
+        // (pour rappel cette valeur est branchée sur le translateX)
+        toValue: 0,
+        // je veux que ca dure une demi seconde
+        duration: 500,
+        // je veux utiliser le GPU du tel si possible
+        useNativeDriver: true,
+      }).start(() => {
+        // un callback appelé quand l'animation est terminée
+        slideAnimIn.setValue(400); // Reset slide-in animation
 
-      // on stocke le nom de l'exo que l'on a terminé
-      setCompletedExercises([
-        // je recopie les anciens exos terminés
-        ...completedExercises,
-        // TODO comprendre prq il faut le !
-        getCurrentExercise()?.name!,
-      ]);
+        // mes animations sont terminées (je suis dans le callback de fin)
+        // si il reste des exos, on avance
+        if (canGoToNextExercise()) {
+          setCurrentExerciseIndex(currentExerciseIndex + 1);
+        }
+
+        // on stocke le nom de l'exo que l'on a terminé
+        setCompletedExercises([
+          // je recopie les anciens exos terminés
+          ...completedExercises,
+          // TODO comprendre prq il faut le !
+          getCurrentExercise()?.name!,
+        ]);
+      });
     } catch (e) {
       console.log(e);
     }
@@ -127,10 +144,12 @@ const OngoingSessionPage = () => {
 
   return (
     <VStack paddingLeft={15} paddingRight={15} alignItems="center">
-      <Heading mb={30} textAlign="center" mt={5} size="xl">
-        {`Doing workout ${workout?.name}`}
-      </Heading>
-      <Box width="100%">
+      {workout && (
+        <Heading mb={30} textAlign="center" mt={5} size="xl">
+          {`Doing workout ${workout?.name}`}
+        </Heading>
+      )}
+      <Box width="100%" position="relative">
         <Animated.View
           style={{
             transform: [{ translateX: slideAnimOut }],
@@ -149,7 +168,15 @@ const OngoingSessionPage = () => {
             />
           ) : null}
         </Animated.View>
-        <NextExerciseInput />
+        <Animated.View
+          style={{
+            position: "absolute",
+            width: "100%",
+            transform: [{ translateX: slideAnimIn }],
+          }}
+        >
+          <NextExerciseInput />
+        </Animated.View>
       </Box>
 
       {completedExercises.length > 0 && (

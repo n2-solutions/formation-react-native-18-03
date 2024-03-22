@@ -97,15 +97,3 @@ je veux envoyer a l'API :
 ```
 
 (Si exo calisthenic -> on envoie `"weights": [0, 0, 0, 0]`)
-
-##### Eh oh cest beaucoup la !
-
-On peut commencer plus simplement en gerant un seul exercice.
-
-```
-  const [workout, setWorkout] = useState<WorkoutWithExercises | null>(null);
-
-  const currentExercise = workout.exercises[0];
-```
-
-et s'occuper juste de cet unique exo. Quand ca fonctionne, on s'occupe de faire marcher la boucle

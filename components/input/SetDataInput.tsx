@@ -30,8 +30,8 @@ export type SetDataInputProps = {
 
 export default function SetDataInput(props: SetDataInputProps) {
   return (
-    <Box width="100%" bg="$primary50" borderRadius={10} px={15}>
-      <HStack my={15} justifyContent="space-evenly" alignItems="center">
+    <Box width="100%" borderRadius={10} px={15}>
+      <HStack my={15} justifyContent="space-evenly" alignItems="flex-end">
         <Button
           variant="link"
           action="primary"
@@ -68,7 +68,6 @@ export default function SetDataInput(props: SetDataInputProps) {
             <ButtonText>- 5kg</ButtonText>
           </VStack>
         </Button>
-        {/* If we are doing a calisthenic exercise, there is no point in displaying a weight */}
         <Text size="3xl" color={props.isCalisthenic ? "$light300" : void 0}>
           {!props.isCalisthenic ? `${props.setData.weight}kg` : "N/A"}
         </Text>
@@ -111,7 +110,7 @@ export default function SetDataInput(props: SetDataInputProps) {
       {/* REPS */}
       <VStack mt={10} alignItems="center">
         <Slider
-          defaultValue={10}
+          defaultValue={props.maxReps}
           size="md"
           orientation="horizontal"
           value={props.setData.reps}

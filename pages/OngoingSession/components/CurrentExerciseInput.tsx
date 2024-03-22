@@ -1,4 +1,4 @@
-import { Box, Button, ButtonText } from "@gluestack-ui/themed";
+import { Box, Button, ButtonText, HStack, Heading } from "@gluestack-ui/themed";
 import SetDataInput from "../../../components/input/SetDataInput";
 import {
   Exercise,
@@ -57,19 +57,36 @@ function CurrentExerciseInput(props: CurrentExerciseInputProps) {
   };
 
   return (
-    <Box>
+    <Box width="100%" bg="$primary50" borderRadius={10} padding={15}>
+      <Heading
+        textAlign="left"
+        mb={5}
+        size="sm"
+        color="$info500"
+      >{`Current exercise : ${props.exercise.name}`}</Heading>
       <SetDataInput
         setData={setsData[currentSetIndex]}
         // quand une serie est modifiée (je change le poids, ou le nombre de repetitions)
         updateSetData={updateSetDataAtCurrentIndex}
-        maxReps={0}
+        maxReps={props.exercise.reps}
         isCalisthenic={false}
       />
 
-      {/* lorsque jai fini une serie de mon exo, jappelle handleSetDone */}
-      <Button size="sm" action="positive" mt={5} onTouchEnd={handleSetDone}>
-        <ButtonText>Set done</ButtonText>
-      </Button>
+      <HStack mt={10} justifyContent="space-between" alignItems="flex-end">
+        <Box>
+          <Heading
+            textAlign="left"
+            mt={5}
+            mb={5}
+            size="sm"
+            color="$info500"
+          >{`Set ${currentSetIndex + 1} of ${props.exercise.sets}`}</Heading>
+        </Box>
+
+        <Button size="sm" action="positive" mt={5} onPress={handleSetDone}>
+          <ButtonText>Set done</ButtonText>
+        </Button>
+      </HStack>
     </Box>
   );
 }

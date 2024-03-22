@@ -1,9 +1,22 @@
+export type ExerciseSession = {
+  id: number;
+  reps: number[];
+  weights: number[];
+  session_id: number;
+  exercise_id: number;
+  created_at: number;
+};
+
 export type Exercise = {
   id?: number;
   name: string;
   sets: number;
   reps: number;
   isCalisthenic: boolean;
+};
+
+export type ExerciseWithSessions = Exercise & {
+  sessions: ExerciseSession[];
 };
 
 export type SetData = {
